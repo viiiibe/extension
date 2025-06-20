@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode Problem Fetcher",
+  "version": "1.0",
+  "description": "Fetch and display LeetCode problems using GraphQL API",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "https://leetcode.cn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LeetCode Problem Fetcher"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/*", "https://leetcode.cn/*"],
+      "js": ["content.js"]
+    }
+  ]
+} 

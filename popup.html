@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>LeetCode Problem Fetcher</title>
+  <style>
+    body {
+      width: 500px;
+      min-height: 400px;
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      color: #1a1a1a;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #0056b3;
+    }
+    
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+    
+    .clear-cache {
+      background: #dc3545;
+    }
+    
+    .clear-cache:hover {
+      background: #c82333;
+    }
+    
+    .clear-cache:disabled {
+      background: #6c757d;
+    }
+    
+    .export {
+      background: #28a745;
+    }
+    
+    .export:hover {
+      background: #218838;
+    }
+    
+    .export:disabled {
+      background: #6c757d;
+    }
+    
+    .status {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .status.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+    
+    .results {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      background: white;
+    }
+    
+    .problem-item {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f1f3f4;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .problem-item:hover {
+      background: #f8f9fa;
+    }
+    
+    .problem-item:last-child {
+      border-bottom: none;
+    }
+    
+    .problem-item.expanded {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+    }
+    
+    .problem-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+    
+    .problem-title {
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+    
+    .problem-difficulty {
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    
+    .difficulty-easy { color: #00af9b; }
+    .difficulty-medium { color: #ffb800; }
+    .difficulty-hard { color: #ff2d55; }
+    
+    .solution-status {
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+    
+    .status-solved {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status-attempted {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .status-unsolved {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .problem-details {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+    
+    .problem-details.expanded {
+      display: block;
+    }
+    
+    .submission-section {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+    
+    .submission-section.expanded {
+      display: block;
+    }
+    
+    .submission-item {
+      padding: 8px;
+      margin-bottom: 8px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      background: #f8f9fa;
+    }
+    
+    .submission-details {
+      margin-top: 8px;
+      padding: 8px;
+      background: #ffffff;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+    }
+    
+    .details-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .details-title {
+      font-weight: 600;
+      color: #1a1a1a;
+      font-size: 14px;
+    }
+    
+    .copy-button {
+      background: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .copy-button:hover {
+      background: #5a6268;
+    }
+    
+    .json-display {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #6c757d;
+      font-style: italic;
+    }
+    
+    .progress-container {
+      margin-top: 10px;
+      padding: 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 6px;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .progress-bar {
+      height: 24px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e9ecef;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #007bff, #0056b3);
+      transition: width 0.3s ease;
+      border-radius: 12px;
+    }
+    
+    .progress-details {
+      text-align: right;
+      font-size: 12px;
+      color: #6c757d;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>LeetCode Problem Fetcher</h1>
+  </div>
+  
+  <div class="controls">
+    <button id="fetchProblems">Fetch All Problems</button>
+    <button id="clearCache" class="clear-cache">Clear Cache</button>
+    <button id="exportProblems" class="export">Export JSON</button>
+  </div>
+  
+  <div id="progressContainer" class="progress-container" style="display: none;">
+    <div class="progress-info">
+      <span id="progressText">Fetching problems...</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div id="progressBar" class="progress-fill"></div>
+    </div>
+    <div id="progressDetails" class="progress-details">Request 1 of 1</div>
+  </div>
+  
+  <div id="status" class="status" style="display: none;"></div>
+  
+  <div id="results" class="results" style="display: none;">
+    <div class="loading">Loading problems...</div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 

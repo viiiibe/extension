@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LeetCode Extension Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>LeetCode Extension Test</h1>
+    
+    <div class="test-section">
+        <h2>Extension Status</h2>
+        <p>This page tests the LeetCode Problem Fetcher extension functionality.</p>
+        <p>To test the extension:</p>
+        <ol>
+            <li>Install the extension in your browser</li>
+            <li>Click the extension icon in the toolbar</li>
+            <li>Click "Fetch All Problems" to get the problem list</li>
+            <li>Click on any problem to expand and see details</li>
+            <li>The latest accepted submission will be automatically fetched</li>
+            <li>Click "View Code" to see the actual source code</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>Features Added</h2>
+        <ul>
+            <li>✅ Auto-fetch latest accepted submission when expanding problems</li>
+            <li>✅ View submission code with runtime and memory metrics</li>
+            <li>✅ Display performance percentiles and test case results</li>
+            <li>✅ Copy submission code to clipboard</li>
+            <li>✅ Export all problems with their latest submissions in JSON format</li>
+            <li>✅ Cache submissions for 30 minutes to reduce API calls</li>
+            <li>✅ Beautiful UI for submission display</li>
+            <li>✅ Only fetches the most recent accepted submission (efficient)</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Export Format</h2>
+        <p>The exported JSON file contains:</p>
+        <ul>
+            <li><strong>All problem data</strong> (ID, title, difficulty, tags, etc.)</li>
+            <li><strong>Latest accepted submission</strong> for each problem (if available)</li>
+            <li><strong>Submission details</strong> including code, runtime, memory usage</li>
+            <li><strong>Performance metrics</strong> and test case results</li>
+        </ul>
+        <p>File format: <code>leetcode-problems-with-submissions-YYYY-MM-DD.json</code></p>
+    </div>
+
+    <div class="test-section">
+        <h2>API Endpoints Used</h2>
+        <ul>
+            <li><strong>Problems:</strong> <code>https://leetcode.com/graphql</code> - problemsetQuestionList query</li>
+            <li><strong>Submissions:</strong> <code>https://leetcode.com/graphql</code> - submissionList query</li>
+            <li><strong>Submission Details:</strong> <code>https://leetcode.com/graphql</code> - submissionDetails query</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Files Modified</h2>
+        <ul>
+            <li><strong>background.js:</strong> Added submission fetching functions and GraphQL queries</li>
+            <li><strong>popup.js:</strong> Added UI for submission display and interaction</li>
+            <li><strong>popup.html:</strong> Added CSS for submission sections</li>
+            <li><strong>README.md:</strong> Updated documentation with new features</li>
+        </ul>
+    </div>
+</body>
+</html> 
